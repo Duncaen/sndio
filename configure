@@ -16,6 +16,8 @@ Usage: configure [options]
 --privsep-user=USER		non-privileged user for sndio daemon [$user]
 --enable-alsa			enable alsa audio & midi backends [$alsa]
 --disable-alsa			disable alsa audio & midi backends
+--enable-tinyalsa		enable tinyalsa audio backends [$tinyalsa]
+--disable-tinyalsa		disable tinyalsa audio backends
 --enable-sun			enable sun audio backend [$sun]
 --disable-sun			disable sun audio backend
 --enable-rmidi			enable character device midi backend [$rmidi]
@@ -33,6 +35,7 @@ END
 prefix=/usr/local			# where to install sndio
 so="libsndio.so.\${MAJ}.\${MIN}"	# shared libs to build
 alsa=no					# do we want alsa support ?
+tinyalsa=no				# do we want tinyalsa support ?
 sun=no					# do we want sun support ?
 oss=no					# do we want oss support ?
 rmidi=no				# do we want support for raw char dev ?
@@ -126,6 +129,12 @@ for i; do
 	--disable-alsa)
 		alsa=no
 		shift;;
+	--enable-tinyalsa)
+		tinyalsa=yes
+		shift;;
+	--disable-tinyalsa)
+		tinyalsa=no
+		shift;;
 	--enable-oss)
 		oss=yes
 		shift;;
@@ -201,6 +210,14 @@ if [ $alsa = yes ]; then
 fi
 
 #
+# if using tinyalsa, add corresponding parameters
+#
+if [ $tinyalsa = yes ]; then
+	defs="$defs -DUSE_TINYALSA"
+	ldadd="$ldadd -ltinyalsa"
+fi
+
+#
 # if using OSS, add corresponding parameters
 #
 if [ $oss = yes ]; then
@@ -272,6 +289,7 @@ user..................... $user
 libbsd................... $libbsd
 precision................ $precision
 alsa..................... $alsa
+tinyalsa................. $tinyalsa
 oss...................... $oss
 sun...................... $sun
 rmidi.................... $rmidi

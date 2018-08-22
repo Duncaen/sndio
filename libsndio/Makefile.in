@@ -101,7 +101,7 @@ clean:
 #
 OBJS = debug.o aucat.o \
 mio.o mio_rmidi.o mio_alsa.o mio_aucat.o \
-sio.o sio_alsa.o sio_aucat.o sio_oss.o sio_sun.o \
+sio.o sio_alsa.o sio_tinyalsa.o sio_aucat.o sio_oss.o sio_sun.o \
 issetugid.o strlcat.o strlcpy.o strtonum.o clock_gettime.o
 
 .c.o:
@@ -140,6 +140,8 @@ mio_rmidi.o:	mio_rmidi.c debug.h mio_priv.h sndio.h
 sio.o:		sio.c debug.h sio_priv.h sndio.h \
 		../bsd-compat/bsd-compat.h
 sio_alsa.o:	sio_alsa.c debug.h sio_priv.h sndio.h \
+		../bsd-compat/bsd-compat.h
+sio_tinyalsa.o:	sio_tinyalsa.c debug.h sio_priv.h sndio.h \
 		../bsd-compat/bsd-compat.h
 sio_aucat.o:	sio_aucat.c aucat.h amsg.h debug.h sio_priv.h sndio.h \
 		../bsd-compat/bsd-compat.h
